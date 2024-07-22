@@ -26,57 +26,44 @@ function rollDice () {
             return;
         }
 
-        var currentElement = document.getElementById("current--0");
-        currentElement.innerHTML = Number(currentElement.outerText) + dice;
+        document.getElementById("current--0").innerHTML = dice;
         player1Score += dice;
+        document.getElementById("score--0").innerHTML = player1Score;
+
+        if(player1Score >= 100){
+            setTimeout(function() {
+                alert("Congratulation player 1 win the game. Click on New Game to start new challenge.");
+              }, 100);
+              disableRollDice(true);
+        }
     }else{
 
         setDiceImage(dice);
-
         if(dice == 1){
             switchPlayer(playerId);
             return;
         }
 
-        var currentElement = document.getElementById("current--1");
-        currentElement.innerHTML = Number(currentElement.outerText) + dice;
+        document.getElementById("current--1").innerHTML = dice;
         player2Score += dice;
-    }
-}
-
-function holdScore (){
-    if(playerId == 0){
-        document.getElementById("score--0").innerHTML = player1Score;
-        if(player1Score >= 100){
-            
-            setTimeout(function() {
-                alert("Congratulation player 1 win the game. Click on New Game to start new challenge.");
-              }, 100);
-              disableRollDice(true);
-            return;
-        }
-        
-        switchPlayer(playerId);
-        
-    }else{
         document.getElementById("score--1").innerHTML = player2Score;
         if(player2Score >= 100){
-
             setTimeout(function() {
                 alert("Congratulation player 2 win the game. Click on New Game to start new challenge.");
               }, 100);
               disableRollDice(true);
-            return;
         }
-
-        switchPlayer(playerId);
     }
+}
+
+function holdScore (){
+    switchPlayer(playerId)
 }
 
 function setDiceImage(dice) {
     var image = document.querySelector('.dice');
     image.style.display = 'block';
-    image.src = "image/dice-" + dice + ".png";
+    image.src = `image/dice-${dice}.png`;
   }
 
   function hideDice() {
@@ -92,7 +79,7 @@ function setDiceImage(dice) {
     if(currnetPlayer == 0){
         playerId = 1;
         document.getElementById("player--0").classList.remove("player--active");
-            document.getElementById("player--1").classList.add("player--active");
+        document.getElementById("player--1").classList.add("player--active");
     }else{
         playerId = 0;
         document.getElementById("player--1").classList.remove("player--active");
